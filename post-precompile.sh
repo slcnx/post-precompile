@@ -185,7 +185,6 @@ WantedBy=multi-user.target
 EOF
 
 systemctl daemon-reload
-echof "手工修改 /etc/systemd/system/$appname.service 模板即可完成配置systemd 服务
 systemctl cat $appname.service
 systemctl status $appname.service
 systemctl start $appname.service
