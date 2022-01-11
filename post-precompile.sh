@@ -184,6 +184,7 @@ KillMode=process
 WantedBy=multi-user.target
 EOF
 
+echof "
 systemctl daemon-reload
 systemctl cat $appname.service
 systemctl status $appname.service
