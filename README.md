@@ -1,8 +1,10 @@
 # post-precompile
  将编译后或预编译目录完成后续操作
 
-
-
+安装到PATH目录
+```bash
+install post-precompile.sh /usr/local/bin/
+```
 
 
 # 示例
@@ -11,6 +13,7 @@
 
 ```bash
 [root@localhost ~]# tar xvf mariadb-10.6.5-linux-systemd-x86_64.tar.gz -C /opt
+[root@localhost ~]# post-precompile.sh -ap /opt/mariadb-10.6.5-linux-systemd-x86_64/
 ```
 
 ![image-20220111130228657](README/image-20220111130228657.png)
