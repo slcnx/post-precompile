@@ -13,6 +13,7 @@ install post-precompile.sh /usr/local/bin/
 
 ```bash
 [root@localhost ~]# tar xvf mariadb-10.6.5-linux-systemd-x86_64.tar.gz -C /opt
+# 由于mariadb自带启动脚本，将不需要安装systemd服务脚本
 [root@localhost ~]# post-precompile.sh -ap /opt/mariadb-10.6.5-linux-systemd-x86_64/
 ```
 
@@ -23,6 +24,11 @@ install post-precompile.sh /usr/local/bin/
 ![image-20220111130257589](README/image-20220111130257589.png)
 
 ## 安装prometheus
+
+```bash
+[root@localhost ~]# tar xvf /mnt/prometheus-2.32.1.linux-amd64.tar.gz -C /usr/local/
+[root@localhost ~]# post-precompile.sh -ap /usr/local/prometheus-2.32.1.linux-amd64/ -s prometheus
+```
 
 ![image-20220111130406563](README/image-20220111130406563.png)
 
