@@ -27,12 +27,28 @@ install post-precompile.sh /usr/local/bin/
 
 ```bash
 [root@localhost ~]# tar xvf /mnt/prometheus-2.32.1.linux-amd64.tar.gz -C /usr/local/
-[root@localhost ~]# post-precompile.sh -ap /usr/local/prometheus-2.32.1.linux-amd64/ -s prometheus
 ```
 
-![image-20220111130406563](README/image-20220111130406563.png)
+切换目录测试执行
 
-![image-20220111130422407](README/image-20220111130422407.png)
+```bash
+[root@localhost ~]# cd /usr/local/prometheus-2.32.1.linux-amd64/
+[root@localhost prometheus-2.32.1.linux-amd64]# 
+```
+
+![image-20220111133101095](README/image-20220111133101095.png)
+
+完成一键安装
+
+```bash
+[root@localhost ~]# post-precompile.sh -ap /usr/local/prometheus-2.32.1.linux-amd64/ -s './prometheus --config.file ./prometheus.yml'
+```
+
+![image-20220111133138484](README/image-20220111133138484.png)
+
+```bash
+[root@localhost prometheus-2.32.1.linux-amd64]# systemctl start prometheus.service
+```
 
 
 
