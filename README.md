@@ -33,7 +33,7 @@ install post-precompile.sh /usr/local/bin/
 
 ```bash
 [root@localhost ~]# cd /usr/local/prometheus-2.32.1.linux-amd64/
-[root@localhost prometheus-2.32.1.linux-amd64]# 
+[root@localhost prometheus-2.32.1.linux-amd64]# ./prometheus --config.file ./prometheus.yml
 ```
 
 ![image-20220111133101095](README/image-20220111133101095.png)
