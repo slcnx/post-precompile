@@ -5,7 +5,7 @@
 #QQ:                    2192383945
 #Date:                  2022-01-10
 #FileName：             pre-compile.sh
-#URL:                   http://www.magedu.com
+#URL:                   http://blog.mykernel.cn
 #Description：          A test toy
 #Copyright (C):        2022 All rights reserved
 #********************************************************************
