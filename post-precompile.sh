@@ -183,9 +183,9 @@ KillMode=process
 [Install]
 WantedBy=multi-user.target
 EOF
+systemctl daemon-reload
 
 echof "
-systemctl daemon-reload
 systemctl cat $appname.service
 systemctl status $appname.service
 systemctl start $appname.service
