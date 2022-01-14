@@ -102,7 +102,7 @@ APP_PATH=$(readlink -f $APP_DIR)
 APP_DIR=$(basename $APP_PATH)
 TARGET_DIR=$(dirname $APP_PATH)
 
-appname=$(echo $APP_DIR | grep -Eo '^[^-]+')
+appname=$(echo $APP_DIR | grep -Po '.*(?=-.)')
 release=$(echo $APP_DIR | grep -Eo '[0-9]+.[0-9]+.[0-9]+')
 
 # 链接
