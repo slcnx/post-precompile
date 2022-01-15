@@ -103,7 +103,7 @@ APP_DIR=$(basename $APP_PATH)
 TARGET_DIR=$(dirname $APP_PATH)
 
 appname=$(echo $APP_DIR | grep -Po '.*(?=-.)')
-release=$(echo $APP_DIR | grep -Eo '[0-9]+.[0-9]+.[0-9]+')
+release=$(echo $APP_DIR | grep -Po '[\d]+\.[\d.]+')
 
 # 链接
 if [ -n $release ]; then
