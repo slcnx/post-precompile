@@ -27,7 +27,9 @@ cat <<EOF
   1.完成将应用目录后续的导出PATH, lib, include, 自动链接
   $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64
   2. 完成1之外，额外支持添加systemd脚本
-  $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64 -a '<可执行程序> [opt]'
+  $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64 -s '<可执行程序> [opt]'
+  3. 完成只是将应用程序链接并, 导出到PATH
+  $(basename $0) -bvp /opt/node_exporter-1.3.1.linux-amd64
 EOF
   exit -1
 }
