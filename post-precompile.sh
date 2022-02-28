@@ -26,18 +26,23 @@ cat <<EOF
 
   1.完成将应用目录后续的导出PATH, lib, include, 自动链接
   $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64
-
+  curl -L https://raw.githubusercontent.com/slcnx/post-precompile/main/post-precompile.sh | bash -s -- -ap /opt/node_exporter-1.3.1.linux-amd64
+  
   2. 完成1之外，额外支持添加systemd脚本
   $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64 -s '<可执行程序> [opt]'
-
+  curl -L https://raw.githubusercontent.com/slcnx/post-precompile/main/post-precompile.sh | bash -s -- -ap /opt/node_exporter-1.3.1.linux-amd64 -s '<可执行程序> [opt]'
+  
   3. 完成只是将应用程序链接并, 导出到PATH
   $(basename $0) -bvp /opt/node_exporter-1.3.1.linux-amd64
-
+  curl -L https://raw.githubusercontent.com/slcnx/post-precompile/main/post-precompile.sh | bash -s -- -bvp /opt/node_exporter-1.3.1.linux-amd64 
+  
   4. 只是导出二进制位置
   $(basename $0) -bp /apps/go
-
+  curl -L https://raw.githubusercontent.com/slcnx/post-precompile/main/post-precompile.sh | bash -s -- -bp /apps/go/
+  
   5. 导出二进制位置和库
   $(basename $0) -blp /apps/go
+  curl -L https://raw.githubusercontent.com/slcnx/post-precompile/main/post-precompile.sh | bash -s -- -blp /apps/go/
 
 EOF
   exit -1
