@@ -26,10 +26,19 @@ cat <<EOF
 
   1.完成将应用目录后续的导出PATH, lib, include, 自动链接
   $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64
+
   2. 完成1之外，额外支持添加systemd脚本
   $(basename $0) -ap /opt/node_exporter-1.3.1.linux-amd64 -s '<可执行程序> [opt]'
+
   3. 完成只是将应用程序链接并, 导出到PATH
   $(basename $0) -bvp /opt/node_exporter-1.3.1.linux-amd64
+
+  4. 只是导出二进制位置
+  $(basename $0) -bp /apps/go
+
+  5. 导出二进制位置和库
+  $(basename $0) -blp /apps/go
+
 EOF
   exit -1
 }
@@ -91,30 +100,36 @@ function echof() {
         echo -e "\033[${3:-1};3${2:-1}m${1}\033[0m"
 }
 
-# 修正目录
-if ! ( [ -n "$APP_DIR" ] && [[ $APP_DIR =~ [[:alpha:]]+-[0-9.]+.* ]] ); then
-        echo "$APP_DIR, 不满足语义化版本, app-release(.arch)?"
-        Usage
-        exit -1
-else
-        echof "$APP_DIR 满足语义化版本" 2
-fi
+# app的目录
+APP_PATH=$(readlink -f $APP_DIR) # 绝对
+TARGET_DIR=$(dirname $APP_PATH)  # 目录
+APP_DIR=$(basename $APP_PATH)    # 基名
+if [ $VERSION -eq 1 ]; then
+        # 修正目录
+        if ! ( [ -n "$APP_DIR" ] && [[ $APP_DIR =~ [[:alpha:]]+-[0-9.]+.* ]] ); then
+                echo "$APP_DIR, 不满足语义化版本, app-release(.arch)?"
+                Usage
+                exit -1
+        else
+                echof "$APP_DIR 满足语义化版本" 2
+        fi
 
-APP_PATH=$(readlink -f $APP_DIR)
-APP_DIR=$(basename $APP_PATH)
-TARGET_DIR=$(dirname $APP_PATH)
 
-appname=$(echo $APP_DIR | grep -Po '.*(?=-[0-9]+.)')
-release=$(echo $APP_DIR | grep -Po '[\d]+\.[\d.]+')
+        appname=$(echo $APP_DIR | grep -Po '.*(?=-[0-9]+.)')
+        release=$(echo $APP_DIR | grep -Po '[\d]+\.[\d.]+')
 
-# 链接
-if [ -n $release ]; then
-        if [ $VERSION -eq 1 ]; then
-                echof "${TARGET_DIR}/$APP_DIR -> ${TARGET_DIR}/$appname" 2 0
-                ln -svfT ${TARGET_DIR}/$APP_DIR ${TARGET_DIR}/$appname
+        # 链接
+        if [ -n $release ]; then
+                if [ $VERSION -eq 1 ]; then
+                        echof "${TARGET_DIR}/$APP_DIR -> ${TARGET_DIR}/$appname" 2 0
+                        ln -svfT ${TARGET_DIR}/$APP_DIR ${TARGET_DIR}/$appname
+                fi
+        else
+                echof "解压的目录的release格式不对, 不能链接" 1 0
         fi
 else
-        echof "解压的目录的release格式不对, 不能链接" 1 0
+        # 用户不需要链接版本, 就直接是应用名
+        appname=$APP_DIR
 fi
 
 # 判断给定的应用名是否存在
