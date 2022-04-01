@@ -15,6 +15,7 @@ set -eu
 Usage() {
 cat <<EOF
   $(basename $0) [-t] [-v] [-b] [-i] -f 解压的归档
+        -q 询问是否修改不标准的目录
         -p dir 应用目录, 满足app-release(.arch)? 格式
         -a 解压预编译包, 相当于-lbiv
         -v 自动链接不带版本号
@@ -57,8 +58,8 @@ INCLUDE=""
 SYSTEMD=""
 LIB=""
 APP_DIR=""
-
-while getopts "t:f:as:p:lbvi" opt
+ANSWER=""
+while getopts "t:f:as:p:qlbvi" opt
 do
    case $opt in
         p)
@@ -89,6 +90,9 @@ do
         BIN=1
         VERSION=1
         ;;
+        q)
+        ANSWER=1
+        ;;
         ?)
         Usage
         ;;
@@ -105,10 +109,28 @@ function echof() {
         echo -e "\033[${3:-1};3${2:-1}m${1}\033[0m"
 }
 
+
+
 # app的目录
 APP_PATH=$(readlink -f $APP_DIR) # 绝对
 TARGET_DIR=$(dirname $APP_PATH)  # 目录
 APP_DIR=$(basename $APP_PATH)    # 基名
+
+#### 是否更新APP目录名
+if [ $ANSWER -eq 1 ]; then
+  read -p 'input appdir: ' APP_DIR
+  # 修正目录
+  if ! ( [ -n "$APP_DIR" ] && [[ $APP_DIR =~ [[:alpha:]]+-[0-9.]+.* ]] ); then
+          echo "$APP_DIR, 不满足语义化版本, app-release(.arch)?"
+          Usage
+          exit -1
+  else
+          echof "$APP_DIR 满足语义化版本" 2
+  fi
+  mv $APP_PATH $TARGET_DIR/$APP_DIR
+  APP_PATH=$TARGET_DIR/$APP_DIR
+fi
+
 if [ $VERSION -eq 1 ]; then
         # 修正目录
         if ! ( [ -n "$APP_DIR" ] && [[ $APP_DIR =~ [[:alpha:]]+-[0-9.]+.* ]] ); then
