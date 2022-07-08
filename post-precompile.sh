@@ -162,7 +162,7 @@ fi
 # 判断给定的应用名是否存在
 # 加入PATH目录
 if [ $BIN -eq 1 ]; then
-        find_bin_count=$(find ${TARGET_DIR}/$appname/ -maxdepth 1 -type d -name bin | wc -l)
+        find_bin_count=$(find ${TARGET_DIR}/$appname/ -maxdepth 1 -type d  \( -name bin -o -name sbin \) | wc -l)
         if [ $find_bin_count -ge 1 ]; then
                 echof "将${TARGET_DIR}/$appname/bin:${TARGET_DIR}/$appname/sbin 加入PATH目录, 需要重新登入shell" 1 0
                 echo -n "export PATH=${TARGET_DIR}/$appname/bin:${TARGET_DIR}/$appname/sbin" > /etc/profile.d/$appname.sh
